@@ -28,27 +28,28 @@
             color: #000000; 
          }
 
-         a {
-            background-color: #003366; 
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 5px;
+         .link-button {
+            background: none; 
+            border: none; 
+            color: #003366; 
+            padding: 0; 
+            font: inherit; 
+            cursor: pointer; 
+            text-decoration: underline; 
             margin: 5px;
-            display: inline-block; 
          }
 
-         a:hover {
-            background-color: #005599; 
+         .link-button:hover {
+            color: #005599; 
          }
       </style>
    </head>
 
    <body>
       <div>
-         <a href="#" id="linkCarregar">Carregar jogos...</a>
-         <a href="#" id="linkOrdenar">Mostrar jogos ordenados</a>
-         <a href="#" id="linkEmbaralhar">Embaralhar jogos</a>
+         <button class="link-button" id="linkCarregar">Carregar jogos...</button>
+         <button class="link-button" id="linkOrdenar">Mostrar jogos ordenados</button>
+         <button class="link-button" id="linkEmbaralhar">Embaralhar jogos</button>
       </div>
       <div id="meu_amor"></div>            
    </body>   
@@ -75,25 +76,16 @@
 
       const embaralharJogos = () => {
          const div = document.getElementById("meu_amor");
-         const jogosEmbaralhados = [...jogos].sort(() => Math.random() - 0.5); 
+         const jogosEmbaralhados = [...jogos].sort(() => Math.random() - 0.5); // Embaralhando
          const header = `<h2>Jogos Embaralhados</h2><table><tr><th>Jogos</th></tr>`;
          const jogosHtml = jogosEmbaralhados.map(item => `<tr><td>${item}</td></tr>`);
          const footer = `</table>`;
          div.innerHTML = `${header}${jogosHtml.join("\n")}${footer}`;
       }
 
-      document.getElementById("linkCarregar").addEventListener("click", (event) => {
-         event.preventDefault(); 
-         carregarDiv(jogos);
-      });
-      document.getElementById("linkOrdenar").addEventListener("click", (event) => {
-         event.preventDefault(); 
-         carregarDivOrdenada();
-      });
-      document.getElementById("linkEmbaralhar").addEventListener("click", (event) => {
-         event.preventDefault(); 
-         embaralharJogos();
-      });                 
+      document.getElementById("linkCarregar").addEventListener("click", () => carregarDiv(jogos));
+      document.getElementById("linkOrdenar").addEventListener("click", () => carregarDivOrdenada());
+      document.getElementById("linkEmbaralhar").addEventListener("click", () => embaralharJogos());                 
    </script>
 
 </html>
