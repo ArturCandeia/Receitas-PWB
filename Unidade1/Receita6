@@ -63,9 +63,9 @@
          }
       ];
 
-      const carregarDiv = (cs, divId = "cervejasDiv") => {
+      const carregarDiv = (cs, divId = "cervejasDiv", headers = ["Nome", "Álcool", "Estilo", "Amargor"]) => {
          const div = document.getElementById(divId);
-         const header = `<table><tr><th>Nome</th><th>Álcool</th><th>Estilo</th><th>IBU</th></tr>`;
+         const header = `<table><tr>${headers.map(header => `<th>${header}</th>`).join("")}</tr>`;
          const itensHtml = cs.map(item => 
             `<tr>
                <td>${item.name}</td>
