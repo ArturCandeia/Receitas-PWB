@@ -32,7 +32,8 @@
    
    <body>
       <div id="meu_amor">
-         <button id="botaoCarregar">Carregando cervejas...</button>
+         <button id="botaoCarregar">Carregar cervejas</button>
+         <button id="botaoOrdenar">Mostrar cervejas ordenadas</button>
       </div>            
    </body>   
    
@@ -50,9 +51,18 @@
          let footer = `</table>`;
          div.innerHTML = `${header}${cervejasHtml}${footer}`;
       }
+
+      function carregarDivOrdenada() {
+         let div = document.getElementById("meu_amor");
+         let cervejasOrdenadas = [...cervejas].sort();
+         let header = `<table><tr><th>Cervejas</th></tr>`;
+         let cervejasHtml = cervejasOrdenadas.map(transformar).join("\n");
+         let footer = `</table>`;
+         div.innerHTML = `${header}${cervejasHtml}${footer}`;
+      }
       
-      let botao = document.getElementById("botaoCarregar");
-      botao.addEventListener("click", carregarDiv);                 
+      document.getElementById("botaoCarregar").addEventListener("click", carregarDiv);
+      document.getElementById("botaoOrdenar").addEventListener("click", carregarDivOrdenada);                 
    </script>
 
 </html>
