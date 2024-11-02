@@ -3,24 +3,89 @@
 
    <head>
       <meta charset="UTF-8">      
+      <style>
+         #meu_amor table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+         }
+
+         #meu_amor th, #meu_amor td {
+            border: 2px solid #003366; 
+            padding: 10px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 18px;
+         }
+
+         #meu_amor th {
+            background-color: #003366; 
+            color: #000000; 
+         }
+
+         #meu_amor td {
+            background-color: #336699; 
+            color: #000000; 
+         }
+
+         button {
+            background-color: #003366; 
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 16px;
+         }
+
+         button:hover {
+            background-color: #005599; 
+         }
+      </style>
    </head>
 
    <body>
-      <div><button id="botaoCarregar">Carregando cervejas...</button></div>
+      <div>
+         <button id="botaoCarregar">Carregar jogos...</button>
+         <button id="botaoOrdenar">Mostrar jogos ordenados</button>
+         <button id="botaoEmbaralhar">Embaralhar jogos</button>
+      </div>
       <div id="meu_amor"></div>            
    </body>   
 
    <script>
-      let cervejas = ["Guinness", "Desperados", "Becks"];
+      let jogos = ["Terraria", "Hollow Knight", "Enter the Gungeon"];
       
-      const carregarDiv = (cervs) => {
+      const carregarDiv = (jogos) => {
          const div = document.getElementById("meu_amor");
-         const cervejasHtml = cervs.map(item => `<h1>${item}</h1>`); 
-         div.innerHTML = `${cervejasHtml.join("\n")}`;
+         const header = `<table><tr><th>Jogos</th></tr>`;
+         const jogosHtml = jogos.map(item => `<tr><td>${item}</td></tr>`); 
+         const footer = `</table>`;
+         div.innerHTML = `${header}${jogosHtml.join("\n")}${footer}`;
       }
 
-      let botao = document.getElementById("botaoCarregar");
-      botao.addEventListener("click", () => carregarDiv(cervejas)); // Passando o array cervejas como argumento
+      const carregarDivOrdenada = () => {
+         const div = document.getElementById("meu_amor");
+         const jogosOrdenados = [...jogos].sort();
+         const header = `<h2>Jogos Ordenados</h2><table><tr><th>Jogos</th></tr>`;
+         const jogosHtml = jogosOrdenados.map(item => `<tr><td>${item}</td></tr>`);
+         const footer = `</table>`;
+         div.innerHTML = `${header}${jogosHtml.join("\n")}${footer}`;
+      }
+
+      const embaralharJogos = () => {
+         const div = document.getElementById("meu_amor");
+         const jogosEmbaralhados = [...jogos].sort(() => Math.random() - 0.5); 
+         const header = `<h2>Jogos Embaralhados</h2><table><tr><th>Jogos</th></tr>`;
+         const jogosHtml = jogosEmbaralhados.map(item => `<tr><td>${item}</td></tr>`);
+         const footer = `</table>`;
+         div.innerHTML = `${header}${jogosHtml.join("\n")}${footer}`;
+      }
+
+      document.getElementById("botaoCarregar").addEventListener("click", () => carregarDiv(jogos));
+      document.getElementById("botaoOrdenar").addEventListener("click", carregarDivOrdenada);
+      document.getElementById("botaoEmbaralhar").addEventListener("click", embaralharJogos);                 
    </script>
 
 </html>
