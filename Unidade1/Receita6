@@ -63,8 +63,8 @@
          }
       ];
 
-      const carregarDiv = cs => {
-         const div = document.getElementById("cervejasDiv");
+      const carregarDiv = (cs, divId = "cervejasDiv") => {
+         const div = document.getElementById(divId);
          const header = `<table><tr><th>Nome</th><th>Álcool</th><th>Estilo</th><th>IBU</th></tr>`;
          const itensHtml = cs.map(item => 
             `<tr>
@@ -83,4 +83,3 @@
    </script>
 
 </html>
-
