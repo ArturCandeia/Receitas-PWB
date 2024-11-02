@@ -63,15 +63,12 @@
          }
       ];
 
-      const carregarDiv = (cs, divId = "cervejasDiv", headers = ["Nome", "Álcool", "Estilo", "Amargor"]) => {
+      const carregarDiv = (cs, divId = "cervejasDiv", headers = ["Nome", "Álcool", "Estilo", "Amargor"], properties = ["name", "alcohol", "style", "ibu"]) => {
          const div = document.getElementById(divId);
          const header = `<table><tr>${headers.map(header => `<th>${header}</th>`).join("")}</tr>`;
          const itensHtml = cs.map(item => 
             `<tr>
-               <td>${item.name}</td>
-               <td>${item.alcohol}</td>
-               <td>${item.style}</td>
-               <td>${item.ibu}</td>
+               ${properties.map(prop => `<td>${item[prop] || "N/A"}</td>`).join("")}
             </tr>`
          ); 
          const footer = `</table>`;
@@ -83,3 +80,4 @@
    </script>
 
 </html>
+
