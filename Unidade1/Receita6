@@ -4,6 +4,10 @@
    <head>
       <meta charset="UTF-8">      
       <style>
+         body {
+            font-family: Arial, sans-serif;
+         }
+
          #cervejasDiv table {
             width: 100%;
             border-collapse: collapse;
@@ -14,18 +18,17 @@
             border: 2px solid #003366; 
             padding: 10px;
             text-align: center;
-            font-family: Arial, sans-serif;
             font-size: 18px;
          }
 
          #cervejasDiv th {
-            background-color: #003366; 
-            color: #ffffff; 
+            background-color: #003366;
+            color: #ffffff;
          }
 
          #cervejasDiv td {
-            background-color: #f2f2f2; 
-            color: #000000; 
+            background-color: #f2f2f2;
+            color: #000000;
          }
       </style>
    </head>
@@ -54,7 +57,6 @@
          }
       ];
 
-      // cs é um array de cervejas
       const carregarDiv = cs => {
          const div = document.getElementById("cervejasDiv");
          const header = `<table><tr><th>Nome</th><th>Álcool</th></tr>`;
@@ -68,3 +70,4 @@
    </script>
 
 </html>
+
