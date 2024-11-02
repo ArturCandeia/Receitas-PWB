@@ -4,35 +4,51 @@
    <head>
       <meta charset="UTF-8">      
       <style>
-         #meu_amor div {
+         #meu_amor table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+         }
+
+         #meu_amor th, #meu_amor td {
             border: 2px solid #003366; 
             padding: 10px;
-            margin: 5px;
-            background-color: #336699; 
-            color: #ffffff; 
             text-align: center;
             font-family: Arial, sans-serif;
             font-size: 18px;
-            border-radius: 5px;
+         }
+
+         #meu_amor th {
+            background-color: #003366; 
+            color: #000000; 
+         }
+
+         #meu_amor td {
+            background-color: #336699; 
+            color: #000000; 
          }
       </style>
    </head>
    
    <body>
-      <div id="meu_amor"><button id="botaoCarregar">Carregando cervejas...</button></div>            
+      <div id="meu_amor">
+         <button id="botaoCarregar">Carregando cervejas...</button>
+      </div>            
    </body>   
    
    <script>
       let cervejas = ["Guinness", "Desperados", "Becks"];
       
       function transformar(item) {
-         return `<div>${item}</div>`;
+         return `<tr><td>${item}</td></tr>`;
       }
       
       function carregarDiv() {
          let div = document.getElementById("meu_amor");
-         let cervejasHtml = cervejas.map(transformar);
-         div.innerHTML = `${cervejasHtml.join("\n")}`;
+         let header = `<table><tr><th>Cervejas</th></tr>`;
+         let cervejasHtml = cervejas.map(transformar).join("\n");
+         let footer = `</table>`;
+         div.innerHTML = `${header}${cervejasHtml}${footer}`;
       }
       
       let botao = document.getElementById("botaoCarregar");
