@@ -20,11 +20,11 @@
 
          #meu_amor th {
             background-color: #003366; 
-            color: #000000; 
+            color: #000000;
          }
 
          #meu_amor td {
-            background-color: #336699; 
+            background-color: #336699;
             color: #000000; 
          }
       </style>
@@ -34,6 +34,7 @@
       <div id="meu_amor">
          <button id="botaoCarregar">Carregar cervejas</button>
          <button id="botaoOrdenar">Mostrar cervejas ordenadas</button>
+         <button id="botaoEmbaralhar">Embaralhar cervejas</button>
       </div>            
    </body>   
    
@@ -60,9 +61,19 @@
          let footer = `</table>`;
          div.innerHTML = `${header}${cervejasHtml}${footer}`;
       }
-      
+
+      function embaralharCervejas() {
+         let div = document.getElementById("meu_amor");
+         let cervejasEmbaralhadas = [...cervejas].sort(() => Math.random() - 0.5); 
+         let header = `<table><tr><th>Cervejas</th></tr>`;
+         let cervejasHtml = cervejasEmbaralhadas.map(transformar).join("\n");
+         let footer = `</table>`;
+         div.innerHTML = `${header}${cervejasHtml}${footer}`;
+      }
+
       document.getElementById("botaoCarregar").addEventListener("click", carregarDiv);
-      document.getElementById("botaoOrdenar").addEventListener("click", carregarDivOrdenada);                 
+      document.getElementById("botaoOrdenar").addEventListener("click", carregarDivOrdenada);
+      document.getElementById("botaoEmbaralhar").addEventListener("click", embaralharCervejas);                 
    </script>
 
 </html>
