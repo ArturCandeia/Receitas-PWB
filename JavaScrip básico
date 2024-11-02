@@ -7,26 +7,30 @@
    
    <body>
       <div id="botaoDiv">
-         <button id="botaoCarregar">Carregando cervejas...</button>
+         <button id="botaoCarregar">Carregar/Apagar cerveja</button>
       </div>
-
 
       <div id="cervejaDiv"></div>           
 
    </body>   
    
    <script>
+      let visivel = false;
+
       function carregarDiv() {
          let div = document.getElementById("cervejaDiv");
-         div.innerHTML = `<h1>Guinness</h1>`;
+
+         if (visivel) {
+            div.innerHTML = ""; 
+         } else {
+            div.innerHTML = `<h1>Guinness</h1>`; 
+         }
+         
+         visivel = !visivel; 
       }
       
       let botao = document.getElementById("botaoCarregar");
       botao.addEventListener("click", carregarDiv);                
-   </script>
-
-</html>         
-
    </script>
 
 </html>
