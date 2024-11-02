@@ -84,8 +84,8 @@
       }
 
       document.getElementById("botaoCarregar").addEventListener("click", () => carregarDiv(jogos));
-      document.getElementById("botaoOrdenar").addEventListener("click", carregarDivOrdenada);
-      document.getElementById("botaoEmbaralhar").addEventListener("click", embaralharJogos);                 
+      document.getElementById("botaoOrdenar").addEventListener("click", () => carregarDivOrdenada()); 
+      document.getElementById("botaoEmbaralhar").addEventListener("click", () => embaralharJogos());                 
    </script>
 
 </html>
