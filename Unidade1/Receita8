@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Cervejas Aleatórias</title>
+   <style>
+      body {
+         margin: 0;
+         padding: 0;
+         font-family: Arial, sans-serif;
+         background-color: #121212;
+         color: #f5f5f5;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+         min-height: 100vh;
+      }
+
+      button {
+         background-color: #1f1f1f;
+         color: #f5f5f5;
+         border: 1px solid #333;
+         padding: 10px 20px;
+         font-size: 16px;
+         cursor: pointer;
+         border-radius: 5px;
+         margin-bottom: 20px;
+         transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+         background-color: #333333;
+      }
+
+      #cervejasDiv {
+         width: 90%;
+         max-width: 800px;
+         background-color: #1f1f1f;
+         border-radius: 10px;
+         padding: 20px;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      .cerveja-card {
+         border: 1px solid #333;
+         border-radius: 8px;
+         padding: 15px;
+         margin-bottom: 10px;
+         background-color: #2a2a2a;
+      }
+
+      .cerveja-card h2 {
+         margin: 0 0 10px;
+         font-size: 20px;
+         color: #ffcb42;
+      }
+
+      .cerveja-card p {
+         margin: 5px 0;
+         font-size: 14px;
+         line-height: 1.5;
+      }
+   </style>
+</head>
+<body>
+   <button id="botaoCarregar">Carregar Cervejas</button>
+   <div id="cervejasDiv">Clique no botão acima para carregar as cervejas.</div>
+
+   <script>
+      const carregarDiv = (cs) => {
+         const div = document.getElementById("cervejasDiv");
+
+         // Mapear cada cerveja em um "card"
+         const itensHtml = cs.map(({ name, alcohol, style, hop, yeast, malts, ibu }) => `
+            <div class="cerveja-card">
+               <h2>${name}</h2>
+               <p><strong>Estilo:</strong> ${style}</p>
+               <p><strong>Álcool:</strong> ${alcohol}</p>
+               <p><strong>Lúpulo:</strong> ${hop}</p>
+               <p><strong>Fermento:</strong> ${yeast}</p>
+               <p><strong>Malte:</strong> ${malts}</p>
+               <p><strong>IBU:</strong> ${ibu}</p>
+            </div>
+         `);
+
+         div.innerHTML = itensHtml.join("\n");
+      };
+
+      const carregarCervejas2 = () => {
+         const div = document.getElementById("cervejasDiv");
+
+         div.innerHTML = `<p>Fazendo requisição...</p>`;
+
+         fetch("https://random-data-api.com/api/v2/beers?size=3")
+            .then((res) => {
+               if (!res.ok) throw new Error("Erro na requisição!");
+               return res.json();
+            })
+            .then((json) => {
+               carregarDiv(json);
+            })
+            .catch((err) => {
+               div.innerHTML = `<p style="color: red;">Erro ao carregar os dados: ${err.message}</p>`;
+            });
+      };
+
+      document.getElementById("botaoCarregar").addEventListener("click", carregarCervejas2);
+   </script>
+</body>
+</html>
