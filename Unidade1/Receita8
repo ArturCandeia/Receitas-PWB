@@ -3,7 +3,7 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Cervejas Aleatórias</title>
+   <title>Usuários Aleatórios</title>
    <style>
       body {
          margin: 0;
@@ -34,7 +34,7 @@
          background-color: #333333;
       }
 
-      #cervejasDiv {
+      #dadosDiv {
          width: 90%;
          max-width: 800px;
          background-color: #1f1f1f;
@@ -43,7 +43,7 @@
          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
       }
 
-      .cerveja-card {
+      .usuario-card {
          border: 1px solid #333;
          border-radius: 8px;
          padding: 15px;
@@ -51,13 +51,13 @@
          background-color: #2a2a2a;
       }
 
-      .cerveja-card h2 {
+      .usuario-card h2 {
          margin: 0 0 10px;
          font-size: 20px;
          color: #ffcb42;
       }
 
-      .cerveja-card p {
+      .usuario-card p {
          margin: 5px 0;
          font-size: 14px;
          line-height: 1.5;
@@ -65,35 +65,33 @@
    </style>
 </head>
 <body>
-   <button id="botaoCarregar">Carregar Cervejas</button>
-   <div id="cervejasDiv">Clique no botão acima para carregar as cervejas.</div>
+   <button id="botaoCarregar">Carregar Usuários</button>
+   <div id="dadosDiv">Clique no botão acima para carregar os usuários.</div>
 
    <script>
-      const carregarDiv = (cs) => {
-         const div = document.getElementById("cervejasDiv");
+      // Função para renderizar os usuários na página
+      const carregarDiv = (usuarios) => {
+         const div = document.getElementById("dadosDiv");
 
-         // Mapear cada cerveja em um "card"
-         const itensHtml = cs.map(({ name, alcohol, style, hop, yeast, malts, ibu }) => `
-            <div class="cerveja-card">
-               <h2>${name}</h2>
-               <p><strong>Estilo:</strong> ${style}</p>
-               <p><strong>Álcool:</strong> ${alcohol}</p>
-               <p><strong>Lúpulo:</strong> ${hop}</p>
-               <p><strong>Fermento:</strong> ${yeast}</p>
-               <p><strong>Malte:</strong> ${malts}</p>
-               <p><strong>IBU:</strong> ${ibu}</p>
+         // Mapear cada usuário em um "card"
+         const itensHtml = usuarios.map(({ first_name, last_name, email, date_of_birth, address }) => `
+            <div class="usuario-card">
+               <h2>${first_name} ${last_name}</h2>
+               <p><strong>Email:</strong> ${email}</p>
+               <p><strong>Data de Nascimento:</strong> ${new Date(date_of_birth).toLocaleDateString()}</p>
+               <p><strong>Endereço:</strong> ${address.street_address}, ${address.city}, ${address.state}</p>
             </div>
          `);
 
          div.innerHTML = itensHtml.join("\n");
       };
 
-      const carregarCervejas2 = () => {
-         const div = document.getElementById("cervejasDiv");
+      const carregarUsuarios = () => {
+         const div = document.getElementById("dadosDiv");
 
          div.innerHTML = `<p>Fazendo requisição...</p>`;
 
-         fetch("https://random-data-api.com/api/v2/beers?size=3")
+         fetch("https://random-data-api.com/api/v2/users?size=5")
             .then((res) => {
                if (!res.ok) throw new Error("Erro na requisição!");
                return res.json();
@@ -106,7 +104,7 @@
             });
       };
 
-      document.getElementById("botaoCarregar").addEventListener("click", carregarCervejas2);
+      document.getElementById("botaoCarregar").addEventListener("click", carregarUsuarios);
    </script>
 </body>
 </html>
