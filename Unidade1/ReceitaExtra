@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Exemplo com API</title>
+   <style>
+      body {
+         font-family: Arial, sans-serif;
+         background-color: #121212;
+         color: #f5f5f5;
+         margin: 0;
+         padding: 0;
+         display: flex;
+         flex-direction: column;
+         align-items: center;
+         justify-content: center;
+      }
+
+      button, input {
+         margin: 10px;
+         padding: 10px;
+         font-size: 16px;
+         border-radius: 5px;
+         border: 1px solid #333;
+         background-color: #1f1f1f;
+         color: #f5f5f5;
+      }
+
+      button:hover, input:focus {
+         background-color: #333333;
+      }
+
+      #dataDiv {
+         max-width: 90%;
+         width: 800px;
+         margin: 20px 0;
+         padding: 20px;
+         background-color: #1f1f1f;
+         border-radius: 10px;
+         overflow-y: auto;
+         max-height: 70vh;
+         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      }
+
+      .data-item {
+         border: 1px solid #333;
+         padding: 10px;
+         margin-bottom: 10px;
+         border-radius: 5px;
+         background-color: #2a2a2a;
+      }
+
+      .highlight {
+         background-color: #444444;
+         color: #ffcb42;
+      }
+   </style>
+</head>
+<body>
+   <h1>Simulando Pesquisa com API</h1>
+   <div>
+      <input type="text" id="searchField" placeholder="Digite para filtrar (local)">
+      <button id="loadMoreBtn">Carregar Mais</button>
+   </div>
+   <div id="dataDiv"></div>
+   <script>
+      let allData = [];
+      let currentPage = 1;
+
+      // Função para carregar dados da API
+      const fetchData = (page, size = 5) => {
+         return fetch(`https://random-data-api.com/api/v2/users?size=${size}&page=${page}`)
+            .then((res) => {
+               if (!res.ok) throw new Error("Erro ao carregar dados");
+               return res.json();
+            });
+      };
+
+      // Função para renderizar os dados
+      const renderData = (data, highlightText = "") => {
+         const div = document.getElementById("dataDiv");
+         const itemsHtml = data.map(({ first_name, last_name, email }) => {
+            const fullName = `${first_name} ${last_name}`;
+            const highlightClass = highlightText && fullName.toLowerCase().includes(highlightText.toLowerCase())
+               ? "highlight"
+               : "";
+            return `
+               <div class="data-item ${highlightClass}">
+                  <p><strong>Nome:</strong> ${fullName}</p>
+                  <p><strong>Email:</strong> ${email}</p>
+               </div>`;
+         });
+         div.innerHTML = itemsHtml.join("\n");
+      };
+
+      // Carregar mais dados ao clicar
+      const loadMoreData = async () => {
+         try {
+            const newData = await fetchData(currentPage);
+            allData = [...allData, ...newData];
+            currentPage++;
+            renderData(allData);
+         } catch (err) {
+            alert("Erro ao carregar mais dados.");
+         }
+      };
+
+      // Filtragem local e destaque
+      const filterData = (searchText) => {
+         renderData(allData, searchText);
+      };
+
+      // Filtragem excluindo itens que não atendam ao critério
+      const excludeData = (searchText) => {
+         const filteredData = allData.filter(({ first_name, last_name }) => {
+            const fullName = `${first_name} ${last_name}`;
+            return fullName.toLowerCase().includes(searchText.toLowerCase());
+         });
+         renderData(filteredData);
+      };
+
+      // Inicialização
+      document.getElementById("loadMoreBtn").addEventListener("click", loadMoreData);
+      document.getElementById("searchField").addEventListener("input", (e) => {
+         const searchText = e.target.value;
+         if (searchText) {
+            filterData(searchText);
+         } else {
+            renderData(allData); // Mostra tudo se o campo estiver vazio
+         }
+      });
+
+      // Primeira carga de dados
+      loadMoreData();
+   </script>
+</body>
+</html>
 
