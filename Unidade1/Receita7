@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta charset="UTF-8">
+   <title>Cervejas</title>
+</head>
+<body>
+   <div><button id="botaoCarregar">Carregando cervejas...</button></div>
+   <div id="cervejasDiv"></div>
+</body>
+<script>
+   let cervejas = [];
+
+   const carregarDiv = (cs) => {
+      const div = document.getElementById("cervejasDiv");
+      const itensHtml = cs.map(
+         ({ name, alcohol, style, ibu, malts }) =>
+            `<div>
+               <strong>${name}</strong><br>
+               <em>Teor Alcoólico:</em> ${alcohol}<br>
+               <em>Estilo:</em> ${style}<br>
+               <em>IBU:</em> ${ibu}<br>
+               <em>Maltes:</em> ${malts}
+            </div><hr>`
+      );
+      div.innerHTML = `${itensHtml.join("\n")}`;
+   };
+
+   async function carregarCervejas() {
+      try {
+         const res = await fetch("https://random-data-api.com/api/v2/beers?size=3");
+         cervejas = await res.json();
+         carregarDiv(cervejas);
+      } catch (error) {
+         console.error("Erro ao carregar cervejas:", error);
+         document.getElementById("cervejasDiv").innerHTML =
+            "<p>Erro ao carregar as cervejas. Tente novamente mais tarde.</p>";
+      }
+   }
+
+   document.getElementById("botaoCarregar").addEventListener("click", () => carregarCervejas());
+</script>
+</html>
